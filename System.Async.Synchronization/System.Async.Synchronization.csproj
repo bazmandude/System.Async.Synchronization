@@ -41,6 +41,7 @@
     <Compile Include="AsyncAutoResetEvent.cs" />
     <Compile Include="AsyncBarrier.cs" />
     <Compile Include="AsyncCountdownEvent.cs" />
+    <Compile Include="AsyncLock.cs" />
     <Compile Include="AsyncManualResetEvent.cs" />
     <Compile Include="AsyncSemaphore.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
