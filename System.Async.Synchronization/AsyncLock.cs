@@ -43,6 +43,15 @@ namespace System.Async.Synchronization
         }
 
         /// <summary>
+        /// Object constructor
+        /// </summary>
+        public AsyncLock()
+        {
+            _semaphore = new AsyncSemaphore(1);
+            _releaser = Task.FromResult(new Releaser(this));
+        }
+
+        /// <summary>
         /// Waits for the lock to be released
         /// </summary>
         public Task<Releaser> LockAsync()
