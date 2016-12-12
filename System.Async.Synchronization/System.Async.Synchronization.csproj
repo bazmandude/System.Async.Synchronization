@@ -38,6 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AsyncAutoResetEvent.cs" />
+    <Compile Include="AsyncCountdownEvent.cs" />
     <Compile Include="AsyncManualResetEvent.cs" />
     <Compile Include="AsyncSemaphore.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />

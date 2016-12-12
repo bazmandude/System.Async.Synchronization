@@ -1,8 +1,4 @@
-﻿using System;
-using System.Async.Synchronization.Extensions;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Async.Synchronization.Extensions;
 using System.Threading;
 using System.Threading.Tasks;
 
