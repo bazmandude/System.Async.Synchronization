@@ -18,9 +18,15 @@ namespace System.Async.Synchronization
 
         public PauseToken Token
         {
-            get { return new PauseToken(this); }
+            get
+            {
+                return new PauseToken(this);
+            }
         }
 
+        /// <summary>
+        /// Gets/sets if the pause signal
+        /// </summary>
         public bool IsPaused
         {
             get
@@ -36,8 +42,7 @@ namespace System.Async.Synchronization
 
                 if (value)
                 {
-                    Interlocked.CompareExchange(
-                    ref _paused, new TaskCompletionSource<bool>(), null);
+                    Interlocked.CompareExchange(ref _paused, new TaskCompletionSource<bool>(), null);
                 }
                 else
                 {
@@ -62,6 +67,9 @@ namespace System.Async.Synchronization
         }
     }
 
+    /// <summary>
+    /// Pause token created from a pause token source
+    /// </summary>
     public struct PauseToken
     {
         private readonly PauseTokenSource _source;
@@ -71,6 +79,9 @@ namespace System.Async.Synchronization
             _source = source;
         }
 
+        /// <summary>
+        /// Gets is a pause has been signaled
+        /// </summary>
         public bool IsPaused
         {
             get
@@ -79,6 +90,10 @@ namespace System.Async.Synchronization
             }
         }
 
+        /// <summary>
+        /// Gets a task that will block until the pause is reset
+        /// </summary>
+        /// <returns>A task</returns>
         public Task WaitWhilePausedAsync()
         {
             return IsPaused ? _source.WaitWhilePausedAsync() : PauseTokenSource._completedTask;
