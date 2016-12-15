@@ -29,6 +29,11 @@ namespace System.Async.Synchronization
             }
             set
             {
+                if (value == this.IsPaused)
+                {
+                    return;
+                }
+
                 if (value)
                 {
                     Interlocked.CompareExchange(
