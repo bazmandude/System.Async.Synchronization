@@ -14,16 +14,27 @@ namespace System.Async.Synchronization.Extensions
         /// <see cref="https://blogs.msdn.microsoft.com/pfxteam/2011/11/10/crafting-a-task-timeoutafter-method/"/>
         public static async Task TimeoutAfter(this Task task, int millisecondsTimeout)
         {
-            using (var tokenSource = new CancellationTokenSource())
+            if ((task.IsCompleted) || (task.IsCanceled) || (task.IsFaulted))
             {
-                if (task == await Task.WhenAny(task, Task.Delay(millisecondsTimeout, tokenSource.Token)))
+                await task;
+            }
+            else if (millisecondsTimeout == 0)
+            {
+                throw new TimeoutException();
+            }
+            else
+            {
+                using (var tokenSource = new CancellationTokenSource())
                 {
-                    tokenSource.Cancel();
-                    await task;
-                }
-                else
-                {
-                    throw new TimeoutException();
+                    if (task == await Task.WhenAny(task, Task.Delay(millisecondsTimeout, tokenSource.Token)))
+                    {
+                        tokenSource.Cancel();
+                        await task;
+                    }
+                    else
+                    {
+                        throw new TimeoutException();
+                    }
                 }
             }
         }
@@ -37,16 +48,27 @@ namespace System.Async.Synchronization.Extensions
         /// <see cref="https://blogs.msdn.microsoft.com/pfxteam/2011/11/10/crafting-a-task-timeoutafter-method/"/>
         public static async Task<T> TimeoutAfter<T>(this Task<T> task, int millisecondsTimeout)
         {
-            using (var tokenSource = new CancellationTokenSource())
+            if ((task.IsCompleted) || (task.IsCanceled) || (task.IsFaulted))
             {
-                if (task == await Task.WhenAny(task, Task.Delay(millisecondsTimeout, tokenSource.Token)))
+                return await task;
+            }
+            else if (millisecondsTimeout == 0)
+            {
+                throw new TimeoutException();
+            }
+            else
+            {
+                using (var tokenSource = new CancellationTokenSource())
                 {
-                    tokenSource.Cancel();
-                    return await task;
-                }
-                else
-                {
-                    throw new TimeoutException();
+                    if (task == await Task.WhenAny(task, Task.Delay(millisecondsTimeout, tokenSource.Token)))
+                    {
+                        tokenSource.Cancel();
+                        return await task;
+                    }
+                    else
+                    {
+                        throw new TimeoutException();
+                    }
                 }
             }
         }
