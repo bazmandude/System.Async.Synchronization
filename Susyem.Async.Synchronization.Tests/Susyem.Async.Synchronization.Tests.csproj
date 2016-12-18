@@ -62,7 +62,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="AsyncLockTests.cs" />
+    <Compile Include="AsyncLockTests\When_acquiring_an_inactive_lock.cs" />
+    <Compile Include="AsyncLockTests\When_acquiring_an_active_lock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
