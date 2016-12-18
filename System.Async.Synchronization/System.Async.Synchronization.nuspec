@@ -1,16 +1,19 @@
-﻿<?xml version="1.0"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2016/06/nuspec.xsd">
-	<metadata>
-		<id>System.Async.Synchronization</id>
-		<version>$version$</version>
-		<title>$title$</title>
-		<authors>Gary Day</authors>
-		<owners>gary day</owners>
-		<projectUrl>https://github.com/bazmandude/System.Async.Synchronization</projectUrl>
-		<requireLicenseAcceptance>false</requireLicenseAcceptance>
-		<description>$description$</description>
-		<releaseNotes>Initial creation of task friendly synchronization primitives.</releaseNotes>
-		<copyright>Copyright 2016</copyright>
-		<tags>async await task synchronization primitives</tags>
-	  </metadata>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>System.Async.Synchronization</id>
+        <version>$version$</version>
+        <title>$title$</title>
+        <authors>Gary Day</authors>
+        <owners>bazmandude</owners>
+        <projectUrl>https://github.com/bazmandude/System.Async.Synchronization</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>$description$</description>
+        <releaseNotes>Initial creation of task friendly synchronization primitives.</releaseNotes>
+        <copyright>Copyright 2016</copyright>
+        <tags>async await task synchronization primitives</tags>
+    </metadata>
+    <files>
+        <file src="bin\Debug\System.Async.Synchronization.dll" target="lib\portable-net45+wp8+win8\System.Async.Synchronization.dll" />
+    </files>
 </package>
