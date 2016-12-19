@@ -1,3 +1,3 @@
 ## System.Async.Synchroniztion
 
-Async/await friendly task synchronization primitives.
+Async/await friendly synchronization primitives.
