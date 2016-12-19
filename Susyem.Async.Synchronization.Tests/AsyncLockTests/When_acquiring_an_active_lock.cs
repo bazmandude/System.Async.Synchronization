@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Susyem.Async.Synchronization.Tests.AsyncLockTests
+namespace System.Async.Synchronization.Tests.AsyncLockTests
 {
     [Subject(typeof(AsyncLock))]
     class When_acquiring_an_active_lock

@@ -1,2 +1,2 @@
 # System.Async.Synchronization
-Provide task friendly synchronization primitives
+Provide a collection ```async/await``` friendly synchronization primitives and other useful classes related to task synchronisation and control. These primitive are heavily derived from the series of article published by **Steven Toub**, [Building Async Coordination Primitives](https://blogs.msdn.microsoft.com/pfxteam/2012/02/11/building-async-coordination-primitives-part-1-asyncmanualresetevent/).
