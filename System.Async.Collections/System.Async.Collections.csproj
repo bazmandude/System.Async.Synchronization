@@ -5,11 +5,11 @@
     <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{67A7AE9F-AE67-462E-808B-F84E8CC0EC54}</ProjectGuid>
+    <ProjectGuid>{35B92C0F-DA6F-4B42-ABC9-30DA9E3F0E85}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>System.Async.Synchronization</RootNamespace>
-    <AssemblyName>System.Async.Synchronization</AssemblyName>
+    <RootNamespace>System.Async.Collections</RootNamespace>
+    <AssemblyName>System.Async.Collections</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -35,18 +35,10 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <None Include="System.Async.Synchronization.nuspec" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AsyncAutoResetEvent.cs" />
-    <Compile Include="AsyncBarrier.cs" />
-    <Compile Include="AsyncCountdownEvent.cs" />
-    <Compile Include="AsyncLock.cs" />
-    <Compile Include="AsyncManualResetEvent.cs" />
-    <Compile Include="AsyncReaderWriterLock.cs" />
-    <Compile Include="AsyncSemaphore.cs" />
-    <Compile Include="Extensions\TaskExtensions.cs" />
-    <Compile Include="PauseTokenSource.cs" />
+    <Compile Include="AsyncQueue.cs" />
+    <Compile Include="Interfaces\IAsyncQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
