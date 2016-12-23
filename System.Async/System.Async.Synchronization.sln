@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Async.Synchronizatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Async.Synchronization.Tests", "System.Async.Synchronization.Tests\System.Async.Synchronization.Tests.csproj", "{F4CDC69D-DCA3-41DC-9DE3-22C6B77FCED7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Async.Collections", "System.Async.Collections\System.Async.Collections.csproj", "{35B92C0F-DA6F-4B42-ABC9-30DA9E3F0E85}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{F4CDC69D-DCA3-41DC-9DE3-22C6B77FCED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4CDC69D-DCA3-41DC-9DE3-22C6B77FCED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4CDC69D-DCA3-41DC-9DE3-22C6B77FCED7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{35B92C0F-DA6F-4B42-ABC9-30DA9E3F0E85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{35B92C0F-DA6F-4B42-ABC9-30DA9E3F0E85}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{35B92C0F-DA6F-4B42-ABC9-30DA9E3F0E85}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{35B92C0F-DA6F-4B42-ABC9-30DA9E3F0E85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
