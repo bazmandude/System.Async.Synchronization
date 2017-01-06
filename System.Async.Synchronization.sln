@@ -7,6 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Async.Synchronizatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Async.Synchronization.Tests", "System.Async.Synchronization.Tests\System.Async.Synchronization.Tests.csproj", "{F4CDC69D-DCA3-41DC-9DE3-22C6B77FCED7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{AF1B9E4B-DFC9-430A-86C2-539253A30B06}"
+	ProjectSection(SolutionItems) = preProject
+		System.Async.Synchronization.nuspec = System.Async.Synchronization.nuspec
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

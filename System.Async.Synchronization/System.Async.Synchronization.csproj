@@ -34,10 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
-    <None Include="System.Async.Synchronization.nuspec" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="AsyncAutoResetEvent.cs" />
     <Compile Include="AsyncBarrier.cs" />
     <Compile Include="AsyncCountdownEvent.cs" />
