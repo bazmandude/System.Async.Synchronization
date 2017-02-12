@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace System.Async.Synchronization
 {
     /// Task friendly barrier.
-    /// Won't cause a thread pool thread to be hogged while wait to the synchronization object to be signaled
+    /// Won't cause a thread pool thread to be hogged while waiting for the synchronization object to be signaled
     /// based on Stephen Toub's article below
     /// </summary>
     /// <see cref="https://blogs.msdn.microsoft.com/pfxteam/2012/02/11/building-async-coordination-primitives-part-4-asyncbarrier/"/>
@@ -47,7 +47,10 @@ namespace System.Async.Synchronization
                 _remainingParticipants = _participantCount;
                 var waiters = _waiters;
                 _waiters = new ConcurrentStack<TaskCompletionSource<bool>>();
-                Parallel.ForEach(waiters, w => w.SetResult(true));
+                foreach(var waiter in waiters)
+                {
+                    waiter.SetResult(true);
+                }
             }
             return tcs.Task;
         }
