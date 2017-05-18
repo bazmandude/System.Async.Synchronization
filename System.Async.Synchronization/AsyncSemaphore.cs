@@ -70,19 +70,23 @@ namespace System.Async.Synchronization
         /// <param name="timeout">Timeout value in milliseconds</param>
         public async Task<bool> WaitAsync(int timeout)
         {
+            var waiter = this.GetWaiter();
+            var waitTask = waiter?.Task ?? _completedTask;
+
             // Handle infinite timeout
             if (timeout == Timeout.Infinite)
             {
-                await this.WaitAsync();
+                await waitTask;
             }
             else
             {
                 try
                 {
-                    await this.WaitAsync().TimeoutAfter(timeout);
+                    await waitTask.TimeoutAfter(timeout);
                 }
                 catch (TimeoutException)
                 {
+                    waiter?.SetCanceled();
                     return false;
                 }
             }
@@ -98,11 +102,16 @@ namespace System.Async.Synchronization
             TaskCompletionSource<bool> toRelease = null;
             lock (_waiters)
             {
-                if (_waiters.Count > 0)
+                while ((_waiters.Count > 0) && (toRelease == null))
                 {
                     toRelease = _waiters.Dequeue();
+                    if (toRelease.Task.IsCanceled)
+                    {
+                        toRelease = null;
+                    }
                 }
-                else
+
+                if (toRelease == null)
                 {
                     ++_currentCount;
                 }
@@ -113,5 +122,27 @@ namespace System.Async.Synchronization
                 toRelease.SetResult(true);
             }
         }
+
+        #region Private methods
+
+        private TaskCompletionSource<bool> GetWaiter()
+        {
+            lock (_waiters)
+            {
+                if (_currentCount > 0)
+                {
+                    --_currentCount;
+                    return null;
+                }
+                else
+                {
+                    var waiter = new TaskCompletionSource<bool>();
+                    _waiters.Enqueue(waiter);
+                    return waiter;
+                }
+            }
+        }
+
+        #endregion
     }
 }
