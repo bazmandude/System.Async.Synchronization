@@ -67,6 +67,7 @@
     <Compile Include="AsyncLockTests\When_active_lock_is_released.cs" />
     <Compile Include="AsyncSemaphoreTests\When_acquiring_a_semaphore_with_no_free_resources.cs" />
     <Compile Include="AsyncSemaphoreTests\When_acquiring_a_semaphore_with_less_than_max_resource_count.cs" />
+    <Compile Include="AsyncSemaphoreTests\When_releasing_all_semaphores_after_waiting_for_more_than_available.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

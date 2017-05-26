@@ -99,15 +99,17 @@ namespace System.Async.Synchronization
         /// </summary>
         public void Release()
         {
+            var result = true;
             TaskCompletionSource<bool> toRelease = null;
             lock (_waiters)
             {
-                while ((_waiters.Count > 0) && (toRelease == null))
+                while (_waiters.Count > 0)
                 {
                     toRelease = _waiters.Dequeue();
                     if (toRelease.Task.IsCanceled)
                     {
-                        toRelease = null;
+                        toRelease.SetResult(false);
+                        break;
                     }
                 }
 
@@ -119,7 +121,7 @@ namespace System.Async.Synchronization
 
             if (toRelease != null)
             {
-                toRelease.SetResult(true);
+                toRelease.SetResult(result);
             }
         }
 
