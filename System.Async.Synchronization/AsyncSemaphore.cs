@@ -12,21 +12,15 @@ namespace System.Async.Synchronization
     /// <see cref="https://blogs.msdn.microsoft.com/pfxteam/2012/02/12/building-async-coordination-primitives-part-5-asyncsemaphore/"/>
     public class AsyncSemaphore
     {
-        private readonly Task _completedTask = Task.FromResult(true);
         private readonly Queue<TaskCompletionSource<bool>> _waiters = new Queue<TaskCompletionSource<bool>>();
+        private int _maxCount;
         private int _currentCount;
 
-        /// <summary>
-        /// Object constructor
-        /// </summary>
-        /// <param name="initialCount">The initial semaphore count</param>
         public AsyncSemaphore(int initialCount)
         {
-            if (initialCount < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(initialCount));
-            }
-            _currentCount = initialCount;
+            if (initialCount < 0) throw new ArgumentOutOfRangeException(nameof(initialCount));
+            _maxCount = initialCount;
+            _currentCount = _maxCount;
         }
 
         /// <summary>
@@ -48,20 +42,8 @@ namespace System.Async.Synchronization
         /// </summary>
         public Task WaitAsync()
         {
-            lock (_waiters)
-            {
-                if (_currentCount > 0)
-                {
-                    --_currentCount;
-                    return _completedTask;
-                }
-                else
-                {
-                    var waiter = new TaskCompletionSource<bool>();
-                    _waiters.Enqueue(waiter);
-                    return waiter.Task;
-                }
-            }
+            var completionSource = this.AllocateCompletionSource();
+            return completionSource?.Task ?? Task.CompletedTask;
         }
 
         /// <summary>
@@ -70,8 +52,9 @@ namespace System.Async.Synchronization
         /// <param name="timeout">Timeout value in milliseconds</param>
         public async Task<bool> WaitAsync(int timeout)
         {
-            var waiter = this.GetWaiter();
-            var waitTask = waiter?.Task ?? _completedTask;
+            // Get wait completion source and task
+            var completionSource = this.AllocateCompletionSource();
+            var waitTask = completionSource?.Task ?? Task.CompletedTask;
 
             // Handle infinite timeout
             if (timeout == Timeout.Infinite)
@@ -82,11 +65,13 @@ namespace System.Async.Synchronization
             {
                 try
                 {
+                    // Handle timed wait
                     await waitTask.TimeoutAfter(timeout);
                 }
                 catch (TimeoutException)
                 {
-                    waiter?.SetCanceled();
+                    // Cancel completion source on timeout
+                    completionSource?.SetCanceled();
                     return false;
                 }
             }
@@ -99,35 +84,36 @@ namespace System.Async.Synchronization
         /// </summary>
         public void Release()
         {
-            var result = true;
             TaskCompletionSource<bool> toRelease = null;
             lock (_waiters)
             {
-                while (_waiters.Count > 0)
+                // Get first waiting non cancelled completion source
+                while ((_waiters.Count > 0) && (toRelease == null))
                 {
                     toRelease = _waiters.Dequeue();
                     if (toRelease.Task.IsCanceled)
                     {
-                        toRelease.SetResult(false);
-                        break;
+                        toRelease = null;
                     }
                 }
 
-                if (toRelease == null)
+                // If no completion sources then increment count
+                if ((toRelease == null) && (_currentCount < _maxCount))
                 {
                     ++_currentCount;
                 }
             }
 
+            // Signal waiting completion source
             if (toRelease != null)
             {
-                toRelease.SetResult(result);
+                toRelease.SetResult(true);
             }
         }
 
         #region Private methods
 
-        private TaskCompletionSource<bool> GetWaiter()
+        private TaskCompletionSource<bool> AllocateCompletionSource()
         {
             lock (_waiters)
             {
